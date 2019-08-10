@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "test",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "dev": "nodemon server.js --NODE_ENV=development",
+    "prod": "nodemon server.js --NODE_ENV=production"
   },
   "author": "Chad Button",
   "license": "ISC",
@@ -13,6 +15,9 @@
     "nodemon": "^1.19.1"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "config": "^3.2.2",
+    "express": "^4.17.1",
+    "js-yaml": "^3.13.1",
+    "mongoose": "^5.6.9"
   }
 }

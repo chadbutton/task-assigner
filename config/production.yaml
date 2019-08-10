@@ -1,0 +1,5 @@
+app:
+  messages:
+    invalidRoute: Invalid End Point
+database:
+  path: mongodb://localhost/task-assigner-prod

@@ -1,0 +1,7 @@
+app:
+  title: Task Assigner
+  port: 3000
+  messages:
+    invalidRoute: not a valid route
+database:
+  path: path_to_db
