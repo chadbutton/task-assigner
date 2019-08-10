@@ -28,6 +28,6 @@ module.exports = function(app) {
 
   //catch all
   app.get('*', function(req, res){
-    res.send(config.get('app.messages.invalidRoute', 404));
+    res.status(404).send(config.get('app.messages.invalidRoute'));
   });
 };

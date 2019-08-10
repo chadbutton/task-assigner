@@ -4,7 +4,7 @@
   "description": "A demo api",
   "main": "index.js",
   "scripts": {
-    "test": "test",
+    "test": "jest",
     "start": "nodemon server.js",
     "dev": "nodemon server.js --NODE_ENV=development",
     "prod": "nodemon server.js --NODE_ENV=production"
@@ -12,7 +12,10 @@
   "author": "Chad Button",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^1.19.1"
+    "@shelf/jest-mongodb": "^1.1.0",
+    "jest": "^24.8.0",
+    "nodemon": "^1.19.1",
+    "supertest": "^4.0.2"
   },
   "dependencies": {
     "config": "^3.2.2",
