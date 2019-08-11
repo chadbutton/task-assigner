@@ -1,15 +1,16 @@
 'use strict';
 
 const config = require('config');
+const { assign_to_agent, mark_completed } = require('../controllers/task-assigner');
 
 module.exports = function (app) {
-  const taskAssigner = require('../controllers/task-assigner');
-
+  
+  
   app.route('/tasks/assign-to-agent')
-    .post(taskAssigner.assign_to_agent);
+    .post(assign_to_agent);
 
   app.route('/tasks/:taskId/mark-completed')
-    .post(taskAssigner.mark_completed);
+    .post(mark_completed);
 
   //catch all
   app.get('*', function (req, res) {

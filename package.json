@@ -8,6 +8,7 @@
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
     "start": "nodemon server.js",
     "dev": "nodemon server.js --NODE_ENV=development",
+    "dev:debug": "nodemon debug server.js --NODE_ENV=development",
     "prod": "nodemon server.js --NODE_ENV=production"
   },
   "author": "Chad Button",

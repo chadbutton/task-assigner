@@ -44,7 +44,7 @@ var TaskSchema = new Schema({
     enum: _.values(States),
     default: 'idle'
   }
-});
+}, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
 
 Object.assign(TaskSchema.statics, {
   States,
@@ -52,5 +52,6 @@ Object.assign(TaskSchema.statics, {
 });
 
 TaskSchema.virtual('isAssignable').get(function() { return this.agent == null && this.state == 'idle'; });
+TaskSchema.virtual('startTime').get(function() { return new Date(this.created_at); });
 
 module.exports = mongoose.model('Tasks', TaskSchema);
