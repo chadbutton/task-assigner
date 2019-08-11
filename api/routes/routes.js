@@ -5,7 +5,7 @@ const config = require('config');
 module.exports = function (app) {
   const taskAssigner = require('../controllers/task-assigner');
 
-  app.route('/tasks/:taskId/assign-to-agent')
+  app.route('/tasks/assign-to-agent')
     .post(taskAssigner.assign_to_agent);
 
   app.route('/tasks/:taskId/mark-completed')

@@ -78,7 +78,7 @@ var generateFakeDBData = async function () {
     return await generateDBAgents(numAgents, tasks);
 };
 
-var regenerateAllFakeDBData = function () {
+var regenerateAllFakeDBData = async function () {
     return Promise.all([Agent.deleteMany(), AgentSkill.deleteMany(), Task.deleteMany()]).then(async function () {
         await generateFakeDBData();
     });
