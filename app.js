@@ -4,6 +4,7 @@ const config = require('config');
 const mongoose = require('mongoose');
 const agent = require('./api/models/agent');
 const task = require('./api/models/task'); 
+const agentSkill = require('./api/models/agent-skill'); 
 const bodyParser = require('body-parser');
 
 mongoose.Promise = global.Promise;

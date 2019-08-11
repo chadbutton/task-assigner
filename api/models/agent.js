@@ -11,14 +11,18 @@ var AgentSchema = new Schema({
         unique: true,
         dropDups: true
     },
-    name: {
-        type: String,
-        required: 'Please include the agent name.'
-    },
+    skills: {
+        type: [{
+            type: Schema.Types.ObjectId,
+            ref: 'AgentSkill'
+        }]
+      },
     task: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Task'
     }
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
+
+AgentSchema.virtual('hasNoTask').get(function() { return this.task == null; });
 
 module.exports = mongoose.model('Agents', AgentSchema);
