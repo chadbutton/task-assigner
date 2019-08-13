@@ -79,7 +79,7 @@ var generateFakeDBData = async function () {
 };
 
 var regenerateAllFakeDBData = async function () {
-    return Promise.all([Agent.deleteMany(), AgentSkill.deleteMany(), Task.deleteMany()]).then(async function () {
+    return Promise.all([Agent.deleteMany().exec(), AgentSkill.deleteMany().exec(), Task.deleteMany().exec()]).then(async function () {
         await generateFakeDBData();
     });
 };

@@ -5,7 +5,6 @@ mongoose.set('useCreateIndex', true);
 const Schema = mongoose.Schema;
 const _ = require('lodash');
 
-//note skills are a static list for simplicity, these could be moved into db once they become dynamic
 const Skills = Object.freeze({
     Skill1: 'skill1',
     Skill2: 'skill2',

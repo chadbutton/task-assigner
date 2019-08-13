@@ -18,7 +18,7 @@ var updateTaskAndSendResult = function (task, agent, res) {
 
   Task.findOneAndUpdate({ _id: task.id }, task, { new: true }, function (err, updatedTask) {
     processError(err, res);
-    console.log('Task Assigner assigned an agent this task:', task)
+    console.log('Task Assigner assign_to_agent assigned an agent this task:', task)
 
     if (task && agent) {
       res.json({ task: task, agent: agent });
@@ -63,7 +63,7 @@ exports.assignTaskToAgent = function (res, task, allAgents) {
 
   var self = exports;
   var agentBestMatch;
-
+  
   //rule 1: agent must possess all skills required by the task
   var allSkilledAgents = self.agentsWithAllSkillsFrom(allAgents, task);
   var allAgentsNotAlreadyOnTask, allAgentsSortedByTimestamp = [];
@@ -100,7 +100,7 @@ exports.assignTaskToAgent = function (res, task, allAgents) {
   task.state = Task.States.Assigned;
   agentBestMatch.task = task;
 
-  console.log("Task Assigner chose this agent as the best match: ", agentBestMatch);
+  console.log("Task Assigner assign_to_agent chose this agent as the best match: ", agentBestMatch);
   updateTaskAndSendResult(task, agentBestMatch, res);
 }
 

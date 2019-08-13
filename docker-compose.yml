@@ -1,0 +1,23 @@
+version: '3'
+services:
+  web:
+    image: node
+    build: ./
+    command: npm run prod
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    depends_on:
+      - mongo
+  test:
+    image: node
+    build: ./
+    command: npm run test
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"

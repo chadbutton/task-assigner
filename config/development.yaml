@@ -2,4 +2,5 @@ app:
   messages:
     invalidRoute: that's not a valid route hacker!
 database:
-  path: mongodb://localhost/task-assigner-dev
+  host: localhost
+  name: task-assigner-dev

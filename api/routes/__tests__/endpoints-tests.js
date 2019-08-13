@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const app = require('../../../app');
 const factory = require('../../data/factory');
 const Task = mongoose.model('Tasks');
+const Agent = mongoose.model('Agents');
+const AgentSkill = mongoose.model('AgentSkill');
 
 // setup teardown -----------
 
@@ -18,21 +20,23 @@ afterAll(async () => {
 
 //Error handing tests -----------
 
-describe("GET / ", () => {
+describe("GET /blah ", () => {
     test("It should get a 404 not found", async (done) => {
-        const response = await request(app).get("/")
+        const response = await request(app).get("/blah")
         expect(response.statusCode).toBe(404);
         done();
     });
 });
 
-//TODO
 describe("POST /tasks/assign-to-agent", () => {
     test.skip("It should get an error that no agent could be selected (rule 5)", async (done) => {
+
+        Agent.deleteMany().exec();
         const response = await request(app).post("/tasks/assign-to-agent");
         expect(response.statusCode).toBe(404);
         done();
-    });
+        });
+        
 });
 
 describe("POST /tasks/:taskId/mark-completed", () => {
@@ -78,11 +82,11 @@ describe("POST /tasks/assign-to-agent", () => {
 describe("POST /tasks/:taskId/mark-completed ", () => {
     test("It should mark a task as completed", async (done) => {
 
-        var taskFromDB = await Task.findOne({ state: Task.States.Idle});
-        
+        var taskFromDB = await Task.findOne({ state: Task.States.Idle });
+
         expect(taskFromDB).toEqual(expect.objectContaining({
             id: expect.any(String)
-         }));
+        }));
         const response = await request(app).post("/tasks/" + taskFromDB.id + "/mark-completed");
 
         expect(response.statusCode).toBe(200);
@@ -95,8 +99,28 @@ describe("POST /tasks/:taskId/mark-completed ", () => {
             priority: expect.any(Number),
             required_skills: expect.any(Array),
             state: Task.States.Completed
-         }));
+        }));
         done();
     });
+});
+
+describe("GET /agents ", () => {
+    test("It should return a list of agents with tasks assigned (if any)", async (done) => {
+
+        const response = await request(app).get("/agents");
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toEqual(expect.objectContaining({
+            agents: expect.any(Array)
+        }));
+        expect(response.body.agents.length).toBeGreaterThan(1);
+        expect(response.body.agents[0]).toEqual(expect.objectContaining({
+            _id: expect.any(String),
+            created_at: expect.any(String),
+            id: expect.any(String),
+            skills: expect.any(Array),
+            updated_at: expect.any(String)
+        }));
+        done();
+    })
 });
 

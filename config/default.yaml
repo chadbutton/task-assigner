@@ -1,7 +1,8 @@
 app:
-  title: Task Assigner
+  title: Work Distributor API
   port: 3000
   messages:
     invalidRoute: not a valid route
 database:
-  path: path_to_db
+  host: localhost
+  name: dbname
