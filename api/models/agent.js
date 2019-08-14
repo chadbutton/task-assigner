@@ -18,9 +18,7 @@ var AgentSchema = new Schema({
         unique: true,
         dropDups: true
     },
-    skills: [{
-        //type: String
-    }],
+    skills: [{}],
     task: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Task'

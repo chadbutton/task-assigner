@@ -42,7 +42,6 @@ exports.agentsWithAllSkillsFrom = function (agents, task) {
 
   return _.filter(agents, function (agent) {
     return _.every(task.required_skills, function (taskSkill) {
-      debugger;
       return agent.skills.includes(taskSkill);
     });
   });

@@ -29,9 +29,7 @@ var TaskSchema = new Schema({
     enum: _.values(Priorities),
     default: 0
   },
-  required_skills: [{
-    //type: String
-  }],
+  required_skills: [{}],
   agent: {
     type: Schema.Types.ObjectId,
     ref: 'Agent'

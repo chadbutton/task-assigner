@@ -32,7 +32,7 @@ var generateDBTasks = async function (numberOfTasks) {
         let priorities = _.values(Task.Priorities);
         let randomPriority = _.values(Task.Priorities)[getRandomInt(priorities.length)];
         let newTask = new Task({ name: 'Task #' + value, priority: randomPriority, required_skills: randomSkills, agents: [], state: Task.States.Idle });
-    debugger;
+
         return newTask.save();
         
     }));
