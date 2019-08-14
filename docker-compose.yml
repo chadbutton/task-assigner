@@ -11,12 +11,6 @@ services:
       - /app/node_modules
     depends_on:
       - mongo
-  test:
-    image: node
-    build: ./
-    command: npm run test
-    depends_on:
-      - mongo
   mongo:
     image: mongo
     ports:

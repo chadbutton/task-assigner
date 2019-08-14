@@ -6,8 +6,11 @@ This is a work distribution service that can distribute tasks to agents.
 It was implemented using Node with Express, MongoDB (mongoose) and Jest/Supertest for the unit tests.
 
 ### Docker files have been provided which will launch a web service and mongodb service directly into a docker container.
-1. `run docker-compose`
-2. open `http://DOCKER_VM_IP:3000` in a browser.
+1. run `docker-machine start` to start vm if not already running.
+2. run `docker-machine env` to get a list of environment variables 
+3. run `eval $(docker-machine env)` to configure shell 
+4. run `docker-compose up`
+5. open `http://DOCKER_VM_IP:3000` in a browser.
 
 ### Or you can clone the git repo and run the following commands:
 1. `npm run test ` to run all unit tests which uses a test db
