@@ -1,15 +1,15 @@
 {
   "name": "task-assigner-api",
   "version": "1.0.0",
-  "description": "A demo api",
+  "description": "Task Assigner Api as a Work Distributoion Service",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --NODE_ENV=test",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
     "start": "nodemon server.js",
     "dev": "nodemon server.js --NODE_ENV=development",
     "dev:debug": "nodemon --inspect-brk server.js --NODE_ENV=development",
-    "prod": "nodemon server.js --NODE_ENV=production"
+    "prod": "node server.js --NODE_ENV=production"
   },
   "author": "Chad Button",
   "license": "ISC",

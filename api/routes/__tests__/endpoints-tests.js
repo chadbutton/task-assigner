@@ -28,30 +28,49 @@ describe("GET /blah ", () => {
     });
 });
 
-describe("POST /tasks/assign-to-agent", () => {
-    test.skip("It should get an error that no agent could be selected (rule 5)", async (done) => {
-
-        Agent.deleteMany().exec();
-        const response = await request(app).post("/tasks/assign-to-agent");
-        expect(response.statusCode).toBe(404);
+describe("POST /api/v1/tasks/assign-to-agent no task name provided", () => {
+    test("It should get a 400 bad request", async (done) => {
+        const response = await request(app).post("/api/v1/tasks/assign-to-agent");
+        expect(response.statusCode).toBe(400);
         done();
-        });
-        
+    });
 });
 
-describe("POST /tasks/:taskId/mark-completed", () => {
+describe("POST /api/v1/tasks/:taskId/mark-completed", () => {
     test("It should get a 404 not found (invalid id)", async (done) => {
-        const response = await request(app).post("/tasks/999/mark-completed");
+        const response = await request(app).post("/api/v1/tasks/999/mark-completed");
+        expect(response.statusCode).toBe(404);
+        done();
+    });
+});
+
+describe("POST /api/v1/tasks/:taskId/mark-completed", () => {
+    test("It should get a 404 not found (invalid id)", async (done) => {
+        const response = await request(app).post("/api/v1/tasks/999/mark-completed");
+        expect(response.statusCode).toBe(404);
+        done();
+    });
+});
+
+describe("POST /api/v1/tasks/:taskId/mark-completed ", () => {
+    test("It should get a 404 not found (passed in task that is already assigned", async (done) => {
+
+        var taskFromDB = await Task.findOne({ state: Task.States.Assigned });
+        debugger;
+        expect(taskFromDB).toEqual(expect.objectContaining({
+            id: expect.any(String)
+        }));
+        const response = await request(app).post("/api/v1/tasks/" + taskFromDB.id + "/mark-completed");
+
         expect(response.statusCode).toBe(404);
         done();
     });
 });
 
 //Expected behavior tests -----------
-
-describe("POST /tasks/assign-to-agent", () => {
-    test("It should create a new task and assign to agent ", async (done) => {
-        const response = await request(app).post("/tasks/assign-to-agent").query({ name: 'Take a call' });
+describe("POST /api/v1/tasks/assign-to-agent", () => {
+    test("It should create a new task with name provided and assign to agent", async (done) => {
+        const response = await request(app).post("/api/v1/tasks/assign-to-agent").query({ name: 'Take a call' });
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual(expect.objectContaining({
             agent: expect.any(Object)
@@ -61,7 +80,7 @@ describe("POST /tasks/assign-to-agent", () => {
         }));
         expect(response.body.task).toEqual(expect.objectContaining({
             _id: expect.any(String),
-            name: expect.any(String),
+            name: 'Take a call',
             priority: expect.any(Number),
             required_skills: expect.any(Array),
             state: Task.States.Assigned,
@@ -79,15 +98,15 @@ describe("POST /tasks/assign-to-agent", () => {
     });
 });
 
-describe("POST /tasks/:taskId/mark-completed ", () => {
+describe("POST /api/v1/tasks/:taskId/mark-completed ", () => {
     test("It should mark a task as completed", async (done) => {
 
         var taskFromDB = await Task.findOne({ state: Task.States.Idle });
-
+        
         expect(taskFromDB).toEqual(expect.objectContaining({
             id: expect.any(String)
         }));
-        const response = await request(app).post("/tasks/" + taskFromDB.id + "/mark-completed");
+        const response = await request(app).post("/api/v1/tasks/" + taskFromDB.id + "/mark-completed");
 
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual(expect.objectContaining({
@@ -104,10 +123,10 @@ describe("POST /tasks/:taskId/mark-completed ", () => {
     });
 });
 
-describe("GET /agents ", () => {
+describe("GET /api/v1/agents ", () => {
     test("It should return a list of agents with tasks assigned (if any)", async (done) => {
 
-        const response = await request(app).get("/agents");
+        const response = await request(app).get("/api/v1/agents");
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual(expect.objectContaining({
             agents: expect.any(Array)
