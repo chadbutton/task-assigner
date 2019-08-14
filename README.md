@@ -1,7 +1,7 @@
 # Work Distribution Service
 
 ## Description
-This is a work distribution service that can distribute tasks to agents.
+This is a work distribution service that assigns tasks to agents based on a set of rules.
 
 It was implemented using Node with Express, MongoDB (mongoose) and Jest/Supertest for the unit tests.
 
