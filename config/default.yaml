@@ -6,3 +6,6 @@ app:
 database:
   host: localhost
   name: dbname
+sim-data:
+  tasks: 100
+  agents: 20

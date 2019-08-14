@@ -4,6 +4,7 @@
 
 const mongoose = require('mongoose');
 const _ = require('lodash');
+const config = require('config');
 
 const Agent = mongoose.model('Agents');
 const AgentSkill = mongoose.model('AgentSkill');
@@ -30,6 +31,7 @@ var generateRandomSkillset = async function () {
 var generateDBTasks = async function (numberOfTasks) {
 
     var tasks = _.range(1, numberOfTasks);
+    console.log('sim-data-factory generated tasks: ' + tasks.length);
     return await Promise.all(_.map(tasks, async function (value, key) {
        
         var randomSkills = await generateRandomSkillset();
@@ -45,6 +47,7 @@ var generateDBTasks = async function (numberOfTasks) {
 var generateDBAgents = async function (numberOfAgents, tasks) {
 
     var agents = _.range(1, numberOfAgents);
+    console.log('sim-data-factory generated agents: ' + agents.length);
     
     return await Promise.all(_.each(agents, async function (value, key) {
         let randomSkills = await generateRandomSkillset();
@@ -66,19 +69,27 @@ var generateDBAgents = async function (numberOfAgents, tasks) {
 
 var generateDBAgentSkills = async function () {
     var agentSkills = [{ value: AgentSkill.Skills.Skill1 }, { value: AgentSkill.Skills.Skill2 }, { value: AgentSkill.Skills.Skill3 } ];
+    console.log('sim-data-factory generated agent skills: ' + agentSkills.length);
+    
     AgentSkill.create(agentSkills);
 };
 
 var generateFakeDBData = async function () {
-    var numTasks = getRandomInt(100);
-    var numAgents = getRandomInt(20);
+    var numTasks = getRandomInt(config.get('sim-data.tasks'));
+    var numAgents = getRandomInt(config.get('sim-data.agents'));
 
+    console.log('sim-data-factory generating random tasks on db...');
     var tasks = await generateDBTasks(numTasks);
+    console.log('sim-data-factory generating agent skills on db...');
     await generateDBAgentSkills();
-    return await generateDBAgents(numAgents, tasks);
+    console.log('sim-data-factory generating agents on db...');
+    await generateDBAgents(numAgents, tasks);
+    console.log('sim-data-factory done.');
+    return;
 };
 
 var regenerateAllFakeDBData = async function () {
+    console.log('sim-data-factory deleting all agents, skills and tasks on db...');
     return Promise.all([Agent.deleteMany().exec(), AgentSkill.deleteMany().exec(), Task.deleteMany().exec()]).then(async function () {
         await generateFakeDBData();
     });

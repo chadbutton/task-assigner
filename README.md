@@ -15,7 +15,7 @@ It was implemented using Node with Express, MongoDB (mongoose) and Jest/Supertes
 3. `npm run prod` to run in production and uses a prod db
 
 ## Endpoints:
-1. `http://HOSTNAME:3000/` which indicates whether the service is up and running.
+1. `http://HOSTNAME:3000/` which simply indicates whether the service is up and running.
 2. `http://HOSTNAME:3000/api/v1/tasks/assign-to-agent` which will create a new task and assign it according a set of rules.
 3. `http://HOSTNAME:3000/api/v1/tasks/:taskId/mark-completed` which will mark a given task as complete.
 3. `http://HOSTNAME:3000/api/v1/agents` which will return a list of all agents and their assigned tasks (if any).

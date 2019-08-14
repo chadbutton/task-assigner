@@ -2,7 +2,7 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 
 const app = require('../../../app');
-const factory = require('../../data/factory');
+const simDataFactory = require('../../data/sim-data-factory');
 const Task = mongoose.model('Tasks');
 const Agent = mongoose.model('Agents');
 const AgentSkill = mongoose.model('AgentSkill');
@@ -10,7 +10,7 @@ const AgentSkill = mongoose.model('AgentSkill');
 // setup teardown -----------
 
 beforeAll(async () => {
-    await factory.regenerateAllFakeDBData();
+    await simDataFactory.regenerateAllFakeDBData();
 });
 
 afterAll(async () => {
@@ -56,7 +56,7 @@ describe("POST /api/v1/tasks/:taskId/mark-completed ", () => {
     test("It should get a 404 not found (passed in task that is already assigned", async (done) => {
 
         var taskFromDB = await Task.findOne({ state: Task.States.Assigned });
-        debugger;
+        
         expect(taskFromDB).toEqual(expect.objectContaining({
             id: expect.any(String)
         }));

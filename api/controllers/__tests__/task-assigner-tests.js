@@ -4,7 +4,7 @@ const task = require('../../models/task');
 const agentSkill = require('../../models/agent-skill'); 
 const agentTaskController = require('../agent-task-controller');
 
-describe("Task Assigner agent selection rule 1", () => {
+describe("agent-task-controller agent selection rule 1", () => {
     test("It should select agent who has all skills required by the task ", async (done) => {
         let task = require('../../data/task');
         let agents = require('../../data/agents');
@@ -15,7 +15,7 @@ describe("Task Assigner agent selection rule 1", () => {
     });
 });
 
-describe("Task Assigner agent selection rule 2", () => {
+describe("agent-task-controller agent selection rule 2", () => {
     test("It should exclude agents already working on a task of equal or higher priority. ", async (done) => {
         let task = require('../../data/task');
         let agents = require('../../data/agents');
@@ -26,7 +26,7 @@ describe("Task Assigner agent selection rule 2", () => {
     });
 });
 
-describe("Task Assigner agent selection rule 3", () => {
+describe("agent-task-controller agent selection rule 3", () => {
     test("It should return agents without a current task assigned ", async (done) => {
         let agents = require('../../data/agents');
 
@@ -36,7 +36,7 @@ describe("Task Assigner agent selection rule 3", () => {
     });
 });
 
-describe("Task Assigner agent selection rule 4", () => {
+describe("agent-task-controller agent selection rule 4", () => {
     test("It should prioritize agents based on current task start time", async (done) => {
         let agents = require('../../data/agents');
         

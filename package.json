@@ -1,7 +1,7 @@
 {
   "name": "task-assigner-api",
   "version": "1.0.0",
-  "description": "Task Assigner Api as a Work Distributoion Service",
+  "description": "Task Assigner Api acting as a Work Distribution Service",
   "main": "index.js",
   "scripts": {
     "test": "jest --NODE_ENV=test",

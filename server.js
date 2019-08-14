@@ -1,9 +1,10 @@
 const app = require("./app");
 const config = require('config');
 const port = process.env.PORT || config.get('app.port');
-const factory = require('./api/data/factory');
+const simDataFactory = require('./api/data/sim-data-factory');
 
-factory.regenerateAllFakeDBData();
+simDataFactory.regenerateAllFakeDBData().then(function() {
+    app.listen(port);
+    console.log(config.get('app.title') + ' service started on port: ' + port);
+});
 
-app.listen(port);
-console.log('Task Assigner RESTful API server started on port: ' + port);

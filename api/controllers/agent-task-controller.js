@@ -7,6 +7,7 @@ const _ = require('lodash');
 
 const Task = mongoose.model('Tasks');
 const Agent = mongoose.model('Agents');
+const AgentSkill = mongoose.model('AgentSkill');
 
 var processNotFoundError = function (err, res) {
   if (err) {
@@ -102,9 +103,9 @@ exports.assignTaskToAgent = function (res, task, allAgents) {
     return processNotFoundError(true, res);
   }
 
-  task.agent = agentBestMatch;
+  task.agent = agentBestMatch._id;
   task.state = Task.States.Assigned;
-  agentBestMatch.task = task;
+  agentBestMatch.task = task._id;
 
   console.log("agent-task-controller assign_to_agent chose this agent as the best match: ", agentBestMatch);
   updateTaskAndSendResult(task, agentBestMatch, res);
@@ -150,9 +151,15 @@ exports.mark_completed = function (req, res) {
 };
 
 exports.all_agents = function (req, res) {
-  var allAgentsQuery = Agent.find().populate('tasks');
+  //endpoint to get a list of all agents with tasks assigned (if any)
+
+  var allAgentsQuery = Agent.find().populate([{ path: 'task', model: Task }]);
 
   allAgentsQuery.exec(async function (err, allAgents) {
+
+    await allAgents.forEach(async function(one, two) {
+      debugger;
+    })
     console.log("agent-task-controller all_agents found agents:", allAgents.length);
     res.json({ agents: allAgents });
   });
