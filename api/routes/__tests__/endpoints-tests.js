@@ -5,7 +5,6 @@ const app = require('../../../app');
 const simDataFactory = require('../../data/sim-data-factory');
 const Task = mongoose.model('Tasks');
 const Agent = mongoose.model('Agents');
-const AgentSkill = mongoose.model('AgentSkill');
 
 // setup teardown -----------
 
@@ -53,10 +52,9 @@ describe("POST /api/v1/tasks/:taskId/mark-completed", () => {
 });
 
 describe("POST /api/v1/tasks/:taskId/mark-completed ", () => {
-    test("It should get a 404 not found (passed in task that is already assigned", async (done) => {
+    test("It should get a 404 not found if task is not assigned", async (done) => {
 
-        var taskFromDB = await Task.findOne({ state: Task.States.Assigned });
-        
+        var taskFromDB = await Task.findOne({ state: Task.States.Idle });
         expect(taskFromDB).toEqual(expect.objectContaining({
             id: expect.any(String)
         }));
@@ -70,7 +68,7 @@ describe("POST /api/v1/tasks/:taskId/mark-completed ", () => {
 //Expected behavior tests -----------
 describe("POST /api/v1/tasks/assign-to-agent", () => {
     test("It should create a new task with name provided and assign to agent", async (done) => {
-        const response = await request(app).post("/api/v1/tasks/assign-to-agent").query({ name: 'Take a call' });
+        const response = await request(app).post("/api/v1/tasks/assign-to-agent").query({ name: 'Take a call', required_skills: ['skill1', 'skill2'] });
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual(expect.objectContaining({
             agent: expect.any(Object)
@@ -101,7 +99,7 @@ describe("POST /api/v1/tasks/assign-to-agent", () => {
 describe("POST /api/v1/tasks/:taskId/mark-completed ", () => {
     test("It should mark a task as completed", async (done) => {
 
-        var taskFromDB = await Task.findOne({ state: Task.States.Idle });
+        var taskFromDB = await Task.findOne({ state: Task.States.Assigned });
         
         expect(taskFromDB).toEqual(expect.objectContaining({
             id: expect.any(String)
@@ -131,7 +129,7 @@ describe("GET /api/v1/agents ", () => {
         expect(response.body).toEqual(expect.objectContaining({
             agents: expect.any(Array)
         }));
-        expect(response.body.agents.length).toBeGreaterThan(1);
+        expect(response.body.agents.length).toBeGreaterThan(0);
         expect(response.body.agents[0]).toEqual(expect.objectContaining({
             _id: expect.any(String),
             created_at: expect.any(String),

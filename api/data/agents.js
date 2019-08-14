@@ -4,12 +4,12 @@ const Task = mongoose.model('Tasks');
 module.exports = [
     {
         id: 'TSR001',
-        skills: [{ value: 'skill1' }, { value: 'skill2' }],
+        skills: ['skill1', 'skill2'],
         task: null
     },
     {
         id: 'TSR002',
-        skills: [{ value: 'skill3' }, { value: 'skill2' }],
+        skills: ['skill3', 'skill2'],
         task: null
     },
     {
@@ -19,16 +19,16 @@ module.exports = [
     },
     {
         id: 'TSR004',
-        skills: [{ value: 'skill3' }, { value: 'skill2' }, { value: 'skill1' }],
+        skills: ['skill3', 'skill2', 'skill1'],
         task: null
     },
     {
         id: 'TSR005',
-        skills: [{ value: 'skill3' }, { value: 'skill2' }, { value: 'skill1' }],
+        skills: ['skill3', 'skill2', 'skill1'],
         task: { 
             name: 'Assigned Task', 
             priority: Task.Priorities.High ,
-            required_skills: [{ value: 'skill2' }, { value: 'skill3' }],
+            required_skills: ['skill2', 'skill3'],
             agent: null,
             state: Task.States.Assigned,
             created_at: '2019-08-09 01:52:10.980Z',
@@ -37,11 +37,11 @@ module.exports = [
     },
     {
         id: 'TSR006',
-        skills: [{ value: 'skill3' }, { value: 'skill2' }, { value: 'skill1' }],
+        skills: ['skill3', 'skill2', 'skill1'],
         task: { 
             name: 'Assigned Task', 
             priority: Task.Priorities.Low ,
-            required_skills: [{ value: 'skill2' }, { value: 'skill3' }],
+            required_skills: ['skill2', 'skill3'],
             agent: null,
             state: Task.States.Assigned,
             created_at: '2019-08-08 02:22:10.980Z',
@@ -50,11 +50,11 @@ module.exports = [
     },
     {
         id: 'TSR007',
-        skills: [{ value: 'skill3' }, { value: 'skill2' }, { value: 'skill1' }],
+        skills: ['skill3', 'skill2', 'skill1'],
         task: { 
             name: 'Assigned Task', 
             priority: Task.Priorities.Low ,
-            required_skills: [{ value: 'skill2' }, { value: 'skill3' }],
+            required_skills: ['skill2' , 'skill3'],
             agent: null,
             state: Task.States.Assigned,
             created_at: '2019-08-09 02:22:10.980Z',

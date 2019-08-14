@@ -7,7 +7,6 @@ const _ = require('lodash');
 
 const Task = mongoose.model('Tasks');
 const Agent = mongoose.model('Agents');
-const AgentSkill = mongoose.model('AgentSkill');
 
 var processNotFoundError = function (err, res) {
   if (err) {
@@ -43,7 +42,8 @@ exports.agentsWithAllSkillsFrom = function (agents, task) {
 
   return _.filter(agents, function (agent) {
     return _.every(task.required_skills, function (taskSkill) {
-      return _.some(agent.skills, taskSkill);
+      debugger;
+      return agent.skills.includes(taskSkill);
     });
   });
 };
@@ -118,7 +118,8 @@ exports.assign_to_agent = function (req, res) {
     return processBadRequestError(true, res);
   }
 
-  var newTask = new Task({ name: req.query.name});
+  var requiredSkills = req.query.required_skills || [];
+  var newTask = new Task({ name: req.query.name, required_skills: requiredSkills });
   var allAgentsQuery = Agent.find({});
 
   console.log("agent-task-controller assign_to_agent received task:", newTask);
@@ -139,7 +140,7 @@ exports.mark_completed = function (req, res) {
       return processNotFoundError(err, res);
     }
 
-    if (task && task.state == Task.States.Idle) {
+    if (task && task.state == Task.States.Assigned) {
       console.log("agent-task-controller mark_completed found task:", task);
       task.state = Task.States.Completed;
       updateTaskAndSendResult(task, null, res);
@@ -157,9 +158,6 @@ exports.all_agents = function (req, res) {
 
   allAgentsQuery.exec(async function (err, allAgents) {
 
-    await allAgents.forEach(async function(one, two) {
-      debugger;
-    })
     console.log("agent-task-controller all_agents found agents:", allAgents.length);
     res.json({ agents: allAgents });
   });

@@ -7,7 +7,6 @@ mongoose.Promise = global.Promise;
 
 const agent = require('./api/models/agent');
 const task = require('./api/models/task'); 
-const agentSkill = require('./api/models/agent-skill'); 
 const routes = require('./api/routes/routes');
 
 const dbPath = "mongodb://" + config.get("database.host") + "/" + config.get('database.name');

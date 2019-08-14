@@ -1,7 +1,6 @@
 
 const agent = require('../../models/agent');
 const task = require('../../models/task'); 
-const agentSkill = require('../../models/agent-skill'); 
 const agentTaskController = require('../agent-task-controller');
 
 describe("agent-task-controller agent selection rule 1", () => {

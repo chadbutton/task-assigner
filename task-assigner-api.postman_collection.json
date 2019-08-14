@@ -1,0 +1,110 @@
+{
+	"info": {
+		"_postman_id": "6631bf3c-931e-4c85-af36-5e01c2a08b4d",
+		"name": "task-assigner-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "agents",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/tasks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "task/assign-to-agent",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/tasks/assign-to-agent?name=Take a call&required_skills=skill1&required_skills=skill2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"tasks",
+						"assign-to-agent"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Take a call"
+						},
+						{
+							"key": "required_skills",
+							"value": "skill1"
+						},
+						{
+							"key": "required_skills",
+							"value": "skill2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "task/mark-completed",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/tasks/5d538caf8f161f598faac12c/mark-completed",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"tasks",
+						"5d538caf8f161f598faac12c",
+						"mark-completed"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ping service",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000"
+				}
+			},
+			"response": []
+		}
+	]
+}

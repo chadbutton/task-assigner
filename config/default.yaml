@@ -8,4 +8,4 @@ database:
   name: dbname
 sim-data:
   tasks: 100
-  agents: 20
+  agents: 50

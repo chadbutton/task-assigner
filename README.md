@@ -10,7 +10,7 @@ It was implemented using Node with Express, MongoDB (mongoose) and Jest/Supertes
 2. run `docker-machine env` to get a list of environment variables 
 3. run `eval $(docker-machine env)` to configure shell 
 4. run `docker-compose up`
-5. open `http://DOCKER_VM_IP:3000` in a browser.
+5. open `http://DOCKER_VM_IP:3000` in a browser to verify.
 
 ### Or you can clone the git repo and run the following commands:
 1. `npm run test ` to run all unit tests which uses a test db

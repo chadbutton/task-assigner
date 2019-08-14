@@ -7,25 +7,19 @@ const _ = require('lodash');
 const config = require('config');
 
 const Agent = mongoose.model('Agents');
-const AgentSkill = mongoose.model('AgentSkill');
 const Task = mongoose.model('Tasks');
 
 var getRandomInt = function (max) {
     return Math.floor(Math.random() * Math.floor(max));
 };
 
-var generateRandomSkillset = async function () {
-    var skills = _.toArray(AgentSkill.Skills);
+var generateRandomSkillset = function () {
+    var skills = _.toArray(Agent.Skills);
     var numSkills = skills.length;
-    var firstNum = getRandomInt(numSkills);
-    var secondNum = getRandomInt(numSkills);
-    var startNum = firstNum <= secondNum ? firstNum : secondNum;
-    var endNum = startNum == firstNum ? secondNum : firstNum;
-    var randomSkills = _.slice(skills, startNum, endNum);
+    var endNum = getRandomInt(numSkills);
+    var randomSkills = _.slice(skills, 0, endNum == 0 ? 1 : endNum );
     
-    return await Promise.all(_.map(randomSkills, async function(s) {
-        return new AgentSkill({ value: s });
-    }));
+    return randomSkills;
 };
 
 var generateDBTasks = async function (numberOfTasks) {
@@ -34,11 +28,11 @@ var generateDBTasks = async function (numberOfTasks) {
     console.log('sim-data-factory generated tasks: ' + tasks.length);
     return await Promise.all(_.map(tasks, async function (value, key) {
        
-        var randomSkills = await generateRandomSkillset();
+        var randomSkills = generateRandomSkillset();
         let priorities = _.values(Task.Priorities);
         let randomPriority = _.values(Task.Priorities)[getRandomInt(priorities.length)];
-        
         let newTask = new Task({ name: 'Task #' + value, priority: randomPriority, required_skills: randomSkills, agents: [], state: Task.States.Idle });
+    debugger;
         return newTask.save();
         
     }));
@@ -46,7 +40,7 @@ var generateDBTasks = async function (numberOfTasks) {
 
 var generateDBAgents = async function (numberOfAgents, tasks) {
 
-    var agents = _.range(1, numberOfAgents);
+    var agents = _.range(0, numberOfAgents);
     console.log('sim-data-factory generated agents: ' + agents.length);
     
     return await Promise.all(_.each(agents, async function (value, key) {
@@ -67,21 +61,12 @@ var generateDBAgents = async function (numberOfAgents, tasks) {
     }));
 };
 
-var generateDBAgentSkills = async function () {
-    var agentSkills = [{ value: AgentSkill.Skills.Skill1 }, { value: AgentSkill.Skills.Skill2 }, { value: AgentSkill.Skills.Skill3 } ];
-    console.log('sim-data-factory generated agent skills: ' + agentSkills.length);
-    
-    AgentSkill.create(agentSkills);
-};
-
 var generateFakeDBData = async function () {
     var numTasks = getRandomInt(config.get('sim-data.tasks'));
     var numAgents = getRandomInt(config.get('sim-data.agents'));
 
     console.log('sim-data-factory generating random tasks on db...');
     var tasks = await generateDBTasks(numTasks);
-    console.log('sim-data-factory generating agent skills on db...');
-    await generateDBAgentSkills();
     console.log('sim-data-factory generating agents on db...');
     await generateDBAgents(numAgents, tasks);
     console.log('sim-data-factory done.');
@@ -90,7 +75,7 @@ var generateFakeDBData = async function () {
 
 var regenerateAllFakeDBData = async function () {
     console.log('sim-data-factory deleting all agents, skills and tasks on db...');
-    return Promise.all([Agent.deleteMany().exec(), AgentSkill.deleteMany().exec(), Task.deleteMany().exec()]).then(async function () {
+    return Promise.all([Agent.deleteMany().exec(), Task.deleteMany().exec()]).then(async function () {
         await generateFakeDBData();
     });
 };
